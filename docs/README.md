@@ -8,7 +8,7 @@
     3. [Git 커밋규칙](./git/Git-%EC%BB%A4%EB%B0%8B%EA%B7%9C%EC%B9%99.md)
 2. [기능 리스트](./%EA%B8%B0%EB%8A%A5%20%EB%A6%AC%EC%8A%A4%ED%8A%B8.md)
 3. [API 리스트](./api/README.md)
-    1. [User 명세서](./api/user.md)
+    1. [Auth 명세서](./api/auth.md)
     2. [Article 명세서](./api/article.md)
     3. [Comment 명세서](./api/comment.md)
 4. [테이블 명세서](./sql/README.md)
