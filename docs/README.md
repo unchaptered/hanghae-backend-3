@@ -14,3 +14,4 @@
 4. [테이블 명세서](./sql/README.md)
     1. [SQL Script](./sql/default.sql)
 5. [Env 설정서](./env/README.md)
+6. [함수 및 변수명](./name/README.md)
