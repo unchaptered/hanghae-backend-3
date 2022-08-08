@@ -1,6 +1,6 @@
 const userService = require('../services/user.service');
 
-const join = () => {
+const join = (req, res, next) => {
 }
 
 
