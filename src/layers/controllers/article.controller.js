@@ -94,7 +94,10 @@ const deleteArticleById = async (req, res, next) => {
 
 
 const updateArticleLike = (req, res, next) => {
+    const {articleId} = req.params;
+    const {isLike} = req.body;
 
+    console.log(req.params, articleId, isLike);
 };
 
 module.exports = {
