@@ -15,11 +15,11 @@ const join = async (userDto, res) => {
 
         const user = await connection.query(authRepository.join(userDto));
 
-        if (user) return res.status(201).json({ message: "회원가입에 성공하였습니다.", result: { nickname: userDto.nickname } })
-        else return res.status(400).json({ message: "회원가입에 실패하였습니다.", result: {} })
+        if (user) return res.status(201).json({success : true, message: "회원가입에 성공하였습니다.", result: { nickname: userDto.nickname } })
+        else return res.status(400).json({ success : false, message: "회원가입에 실패하였습니다.", result: {} })
 
     } catch (err) {
-        return res.json(err.message);
+        return res.status(400).json(err.message);
     }
 
 };

@@ -2,8 +2,6 @@ const authService = require('../services/auth.service');
 const Joi = require("joi");
 
 
-require("mysql2");
-
 /**
  * 회원가입 API
  * @param {Request} req 
@@ -24,7 +22,7 @@ const join = async (req, res, next) => {
         return authService.join(userDto, res);
         
     } catch (err) {
-        return res.json(err.message);
+        return res.status(400).json(err.message);
     }
 
 
