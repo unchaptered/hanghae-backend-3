@@ -3,6 +3,7 @@ const morgan = require('morgan');
 
 const authRouter = require('./layers/routers/auth.router');
 const articleRouter = require('./layers/routers/article.router');
+const commentRouter = require('./layers/routers/comment.router');
 
 const app = express();
 
