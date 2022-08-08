@@ -12,5 +12,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/auth', authRouter);
 app.use('/article', articleRouter);
+app.use('/comment', commentRouter);
 
 app.listen(3000, () => console.log(`Server is running on 3000`));
