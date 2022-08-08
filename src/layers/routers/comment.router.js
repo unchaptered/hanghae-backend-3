@@ -3,6 +3,8 @@ const commentController = require('../controllers/comment.controller');
 
 const commentRouter = express.Router();
 
-userRouter.post('/comment', commentController.Comment);
+commentRouter.post('', commentController.Comment);
+
+commentRouter.put('/:commentId/toggle-like', commentController.updateCommentLike);
 
 module.exports = commentRouter;

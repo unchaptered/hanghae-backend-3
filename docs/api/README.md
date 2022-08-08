@@ -7,13 +7,13 @@
 
 | 설명              | 경로                          | Body 유무 | 담당자 |
 | :--------------- | :---------------------------- | :-------- | :---- |
-| 회원가입          | POST /auth/join               | | @codeing999 |
-| 로그인            | POST /auth/login              | | @codeing999 |
-| 게시글 작성       | POST /article                 | | @unchaptered |
-| 게시글 조회       | GET /article                  | | @unchaptered |
-| 게시글 상세 조회  | GET /article/:id              | | @unchaptered |
-| 게시글 수정       | PUT /article/:id              | | @unchaptered |
-| 게시글 삭제       | DELETE /article/:id           | | @unchaptered |
+| 회원가입          | POST /auth/join               | { nickname, password, confirm } | @codeing999 |
+| 로그인            | POST /auth/login              | { nickname, password }  | @codeing999 |
+| 게시글 작성       | POST /article                 | { title, content } | @unchaptered |
+| 게시글 조회       | GET /article                  | - | @unchaptered |
+| 게시글 상세 조회  | GET /article/:id              | - | @unchaptered |
+| 게시글 수정       | PUT /article/:id              | { title, content } | @unchaptered |
+| 게시글 삭제       | DELETE /article/:id           | - | @unchaptered |
 | 게시글 좋아요     | PUT /article/:id/toggle-like  | | @rumaro122  |
 | 댓글 작성         | POST /comment                 | | @JeungHoSub |
 | 댓글 조회         | GET /comment                  | | @JeungHoSub |
