@@ -9,7 +9,7 @@
 3. `origin` dev/** 코드 푸쉬 : `local` dev/** to `origin` dev/**
 4. `origin` submain 최신화 : `origin` dev/** to `origin` submian
 
-<p style="align: center;"><img src="./img/git-branch.png" style="width: 600px;"></p>
+<p style="align: center;"><img src="../img/git-branch.png" style="width: 600px;"></p>
 
 <br><hr><br>
 
