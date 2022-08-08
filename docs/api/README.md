@@ -7,8 +7,8 @@
 
 | 설명              | 경로                          | Body 유무 | 담당자 |
 | :--------------- | :---------------------------- | :-------- | :---- |
-| 회원가입          | POST /auth/join               | | @codeing999 |
-| 로그인            | POST /auth/login              | | @codeing999 |
+| 회원가입          | POST /auth/join               | { nickname, password, confirm } | @codeing999 |
+| 로그인            | POST /auth/login              | { nickname, password }  | @codeing999 |
 | 게시글 작성       | POST /article                 | { title, content } | @unchaptered |
 | 게시글 조회       | GET /article                  | - | @unchaptered |
 | 게시글 상세 조회  | GET /article/:id              | - | @unchaptered |
