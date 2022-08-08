@@ -1,4 +1,4 @@
-const userService = require('../services/user.service');
+const likeService = require('../services/like.service');
 
 const join = () => {
 }
