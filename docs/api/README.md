@@ -1,4 +1,4 @@
-[< 돌아가기](./README.md)
+[< 돌아가기](../README.md)
 
 ## API 리스트
 
@@ -20,3 +20,9 @@
 | 댓글 수정         | PUT /comment/:id              | | @JeungHoSub |
 | 댓글 삭제         | DELETE /comment/:id           | | @JeungHoSub |
 | 댓글 좋아요       | PUT /comment/:id/toggle-like  | | @rumaro122  |
+
+### 하위 문서 목록
+
+1. [User 명세서](./user.md)
+2. [Article 명세서](./article.md)
+3. [Comment 명세서](./comment.md)
