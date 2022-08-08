@@ -6,7 +6,7 @@ const articleRouter = require('./layers/routers/article.router');
 
 const app = express();
 
-app.use(morgan);
+app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
