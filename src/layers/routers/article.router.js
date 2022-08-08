@@ -12,4 +12,6 @@ articleRouter.route('/:articleId')
     .put(articleController.updateArticleById)
     .delete(articleController.deleteArticleById);
 
+articleRouter.put('/:articleId/toggle-like', articleController.updateArticleLike);
+
 module.exports = articleRouter;
