@@ -25,6 +25,12 @@ const createComment = async (req, res, next) => {
 
 }
 
+const updateCommentLike = (req, res, next) => {
+    const {commentId} = req.params;
+    const {isLike} = req.body;
+
+    console.log(req.params, commentId, isLike);
+};
 
 const getCommentById = async (req, res, next) => {
 
@@ -99,6 +105,7 @@ module.exports = {
 
     updateCommentById,
     deleteCommentById,
-    getCommentById
+    getCommentById,
 
+    updateCommentLike,
 }

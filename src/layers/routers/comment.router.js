@@ -12,4 +12,6 @@ commentRouter.route('/:articleId')
     .put(commentController.updateCommentById)
     .delete(commentController.deleteCommentById);
 
+commentRouter.put('/:commentId/toggle-like', commentController.updateCommentLike);
+
 module.exports = commentRouter;
