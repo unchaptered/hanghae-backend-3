@@ -1,4 +1,9 @@
-const join = () => {}
+const join = (userDto) => {
+
+    return `
+        INSERT INTO user (nickname, password) 
+            VALUES ("${userDto.nickname}", "${userDto.password}");`;
+}
 
 
 
