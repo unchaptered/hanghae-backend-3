@@ -1,10 +1,12 @@
 const express = require('express');
+const morgan = require('morgan');
 
 const authRouter = require('./layers/routers/user.router');
 const articleRouter = require('./layers/routers/article.router');
 
 const app = express();
 
+app.use(morgan);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
