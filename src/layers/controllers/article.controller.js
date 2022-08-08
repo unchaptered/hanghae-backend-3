@@ -92,13 +92,16 @@ const deleteArticleById = async (req, res, next) => {
     }
 }
 
+
+const updateArticleLike = (req, res, next) => {
+
+};
+
 module.exports = {
-
-    getArticle,
-    createArtilce,
-
-    updateArticleById,
-    deleteArticleById,
-    getArticleById
-
+    getArticle, 
+    createArtilce, 
+    getArticleById, 
+    updateArticleById, 
+    deleteArticleById, 
+    updateArticleLike
 }
