@@ -42,9 +42,11 @@ const getArticleById = async (req, res, next) => {
 
     try {
 
-        const result = await joi.object({
+        await joi.object({
             articleId: joi.number().required()
         }).validateAsync({ articleId });
+
+        const result = await rticleService.getArticleById(articleId);
 
         return res.json(result);
 
@@ -65,12 +67,14 @@ const updateArticleById = async (req, res, next) => {
 
     try {
 
-        const result = await joi.object({
+        await joi.object({
             userId: joi.number().required(),
             articleId: joi.number().required(),
             title: joi.string().min(1).max(50).required(),
             content: joi.string().min(1).max(250).required()
         }).validateAsync({ userId: testUserId, articleId, title, content });
+
+        const result = articleService.updateArticleById(testUserId, articleId, title, content);
 
         return res.json(result);
 
@@ -90,11 +94,13 @@ const deleteArticleById = async (req, res, next) => {
 
     try {
 
-        const result = await joi.object({
+        await joi.object({
             userId: joi.number().required(),
             articleId: joi.number().required()
         }).validateAsync({ userId: testUserId, articleId });
 
+        const result = articleService.deleteArticleById(testUserId, articleId);
+        
         return res.json(result);
 
     } catch(err) {
