@@ -24,7 +24,24 @@ const join = async (userDto, res) => {
 
 };
 
+const login = async (userDto, res) => {
+
+    try {
+
+        const connection = await (await pool).getConnection();
+
+        const user = await connection.query(authRepository.login(userDto));
+
+        if (user[0].length) return res.status(200).json({success : true, message: "로그인에 성공하였습니다.", result: user[0] })
+        else return res.status(400).json({ success : false, message: "로그인에 실패하였습니다.", result: user[0] })
+
+
+    } catch (err) {
+        return res.status(400).json(err.message);
+    }
+}
 
 module.exports = {
-    join
+    join,
+    login
 }
