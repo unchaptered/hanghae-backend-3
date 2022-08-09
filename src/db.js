@@ -16,9 +16,9 @@ const {
  * 
  * ( () => {} )() 의 형태와 같이 작성하여 함수를 즉시 실행하는 형태로 구성
  */
-module.exports = (async () => {
+module.exports = (() => {
 
-    return await mysql.createPool({
+    return mysql.createPool({
         host: MYSQL_HOST,
         user: MYSQL_USER,
         database: MYSQL_DATABASE,
