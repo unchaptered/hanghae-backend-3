@@ -5,8 +5,14 @@ const join = (userDto) => {
             VALUES ("${userDto.nickname}", "${userDto.password}");`;
 }
 
+const login = (userDto) => {
 
+    return `
+        SELECT nickname FROM user
+            WHERE nickname = "${userDto.nickname}" AND password = "${userDto.password}";`;
+}
 
 module.exports = {
-    join
+    join,
+    login
 }
