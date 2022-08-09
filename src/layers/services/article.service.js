@@ -3,7 +3,7 @@ const articleRepository = require('../repositories/article.repository');
 const authRepository = require('../repositories/auth.repository');
 
 /** @param { number } userId @param { string } title @param { string } content @returns { Promise< string > } */
-const createArtilce = async (userId, title, content) => {
+const createArticle = async (userId, title, content) => {
 
     const poolConnection = await pool.getConnection();
 
@@ -35,5 +35,5 @@ const createArtilce = async (userId, title, content) => {
 }
 
 module.exports = {
-    createArtilce
+    createArticle
 }

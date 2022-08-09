@@ -20,7 +20,7 @@ const createArtilce = async (req, res, next) => {
             content: joi.string().min(1).max(250).required()
         }).validateAsync({ userId: testUserId, title, content });
 
-        const result = await articleService.createArtilce(testUserId, title, content);
+        const result = await articleService.createArticle(testUserId, title, content);
 
         return res.status(200).json(result);
 
