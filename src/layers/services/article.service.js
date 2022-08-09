@@ -1,8 +1,8 @@
 const pool = require('../../db');
 const articleRepository = require('../repositories/article.repository');
-const authRepository = require('../repositories/auth.repository');
+const commentRepository = require('../repositories/comment.repository');
 
-const createArtilce = async (userId, title, content) => {
+const createComment = async (userId, articleId, content) => {
 
     const poolConnection = await pool.getConnection();
 
@@ -10,17 +10,17 @@ const createArtilce = async (userId, title, content) => {
         
         await poolConnection.beginTransaction();
 
-        // userId 가 테이블에 실존하는지 체크
-        const isExists = await authRepository.isExists(poolConnection, userId);
-        if (!isExists) throw new Error('존재하지 않는 사용자입니다.');
+        // articleId 가 테이블에 실존하는지 체크
+        const isExists = await articleRepository.isExists(poolConnection, articleId);
+        if (!isExists) throw new Error('존재하지 않는 게시글입니다.');
 
-        const isCreated = await articleRepository.createArticle(poolConnection, userId, title, content);
-        if (isCreated === null) throw new Error('생성에 실패한 게시글입니다.');
+        const isCreated = await commentRepository.createArticle(poolConnection, userId, articleId, content);
+        if (isCreated === null) throw new Error('생성에 실패한 댓글입니다.');
 
         await poolConnection.commit();
         poolConnection.release();
 
-        return '게시글 작성에 성공하셨습니다.';
+        return '댓글 작성에 성공하셨습니다.';
 
     } catch(err) {
 
@@ -34,5 +34,5 @@ const createArtilce = async (userId, title, content) => {
 }
 
 module.exports = {
-    createArtilce
+    createComment
 }
