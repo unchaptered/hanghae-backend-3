@@ -1,14 +1,9 @@
 const express = require('express');
 const morgan = require('morgan');
 const pool = require('./db')
-    .then(pool => {
-        console.log('Pool 생성 성공');
-        
-        pool.getConnection()
-            .then(res => console.log('연결 성공'))
-            .catch(err => console.log('연결 실패', err));
-    })
-    .catch(err => console.log('Pool 생성 에러', err));
+pool.getConnection()
+    .then(res => console.log('연결 성공'))
+    .catch(err => console.log('연결 실패', err));
 
 const authRouter = require('./layers/routers/auth.router');
 const articleRouter = require('./layers/routers/article.router');

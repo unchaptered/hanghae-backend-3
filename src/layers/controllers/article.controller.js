@@ -11,16 +11,21 @@ const createArtilce = async (req, res, next) => {
 
     try {
 
-        const result = await joi.object({
+        await joi.object({
+            userId: joi.number().required(),
             title: joi.string().min(1).max(50).required(),
             content: joi.string().min(1).max(250).required()
-        }).validateAsync({ title, content });
+        }).validateAsync({ userId: testUserId, title, content });
 
-        return res.json(result);
+        const result = await articleService.createArtilce(testUserId, title, content);
+
+        return res.status(200).json(result);
 
     } catch(err) {
 
-        return res.json(err.message);
+        console.log(err);
+
+        return res.status(500).json(err.message);
 
     }
 
