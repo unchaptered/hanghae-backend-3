@@ -2,6 +2,7 @@ const pool = require('../../db');
 const articleRepository = require('../repositories/article.repository');
 const authRepository = require('../repositories/auth.repository');
 
+/** @param { number } userId @param { string } title @param { string } content @returns { Promise< string > } */
 const createArtilce = async (userId, title, content) => {
 
     const poolConnection = await pool.getConnection();
