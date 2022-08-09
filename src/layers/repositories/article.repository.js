@@ -7,7 +7,7 @@ const mysql = require('mysql2');
  * @param { number } userId 
  * @param { string } title 
  * @param { string } content : ;
- * @returns 
+ * @returns { Promise< { articleId: number, userId: number, title: string, content: string } | null >}
  */
 const createArticle = async (poolConnection, userId, title, content) => {
     
