@@ -1,9 +1,12 @@
+const e = require('express');
 const joi = require('joi');
 const articleService = require('../services/article.service');
 
+/** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
 const getArticle = async (req, res, next) => {
 }
 
+/** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
 const createArtilce = async (req, res, next) => {
 
     const testUserId = 1;
@@ -32,6 +35,7 @@ const createArtilce = async (req, res, next) => {
 }
 
 
+/** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
 const getArticleById = async (req, res, next) => {
 
     const { articleId } = req.params;
@@ -52,6 +56,7 @@ const getArticleById = async (req, res, next) => {
 
 }
 
+/** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
 const updateArticleById = async (req, res, next) => {
 
     const testUserId = 10;
@@ -76,6 +81,8 @@ const updateArticleById = async (req, res, next) => {
     }
     
 }
+
+/** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
 const deleteArticleById = async (req, res, next) => {
 
     const testUserId = 10;
