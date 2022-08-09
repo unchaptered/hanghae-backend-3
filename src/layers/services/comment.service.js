@@ -17,9 +17,9 @@ const updateCommentLike = async (userId, commentId, isLike) => {
         const isCommentExists = await commentRepository.isExists(poolConnection, commentId);
         if (!isCommentExists) throw new Error('존재하지 않는 게시물입니다.'); 
 
-        const isCommentLikeExists = await articleRepository.isLikeExists(poolConnection, userId, commentId);
-        if (isCommentLikeExists) await articleRepository.updateCommentLike(poolConnection, userId, commentId, isLike);        
-        else {await articleRepository.createCommentLike(poolConnection, userId, commentId, isLike );};
+        const isCommentLikeExists = await commentRepository.isLikeExists(poolConnection, userId, commentId);
+        if (isCommentLikeExists) await commentRepository.updateCommentLike(poolConnection, userId, commentId, isLike);        
+        else {await commentRepository.createCommentLike(poolConnection, userId, commentId, isLike );};
         
         await poolConnection.commit();
         poolConnection.release();
