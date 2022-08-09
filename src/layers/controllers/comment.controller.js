@@ -29,7 +29,7 @@ const updateCommentLike = async (req, res, next) => {
     const {commentId} = req.params;
     const {isLike} = req.body;
 
-    const testUserId = 2;
+    const testUserId = 1;
     const testCommentId = 1;
 
     try {
@@ -38,7 +38,7 @@ const updateCommentLike = async (req, res, next) => {
             userId: joi.number().required(),
             commentId: joi.number().required(),
             isLike: joi.boolean().required()
-        }).validateAsync({userId:testUserId, commentId:testArticleId, isLike});
+        }).validateAsync({userId:testUserId, commentId:testCommentId, isLike});
 
         const result = await commentService.updateCommentLike(testUserId, testCommentId, isLike);
         return res.status(200).json(result);
