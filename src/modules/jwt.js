@@ -12,15 +12,11 @@ module.exports = async (req, res, next) => {
         throw new Error("로그인 후 이용 가능한 기능입니다.");
     }
 
-    const poolConnection = await pool.getConnection();
-
     try {
-        const { userid } = jwt.verify(authToken, process.env.JWT_SECRET);
-        console.log("userid",userid);
-        const isExists = await authRepository.isExists(poolConnection, userid);
-        if (!isExists) throw new Error('로그인 후 이용 가능한 기능입니다.');
+        const { userId} = jwt.verify(authToken, process.env.JWT_SECRET);
+        console.log("userid",userId);
         
-        req.body.userid = +userid;
+        req.body.userId = +userId;
         next();
 
     } catch (err) {
