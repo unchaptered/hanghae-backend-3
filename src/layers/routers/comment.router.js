@@ -6,13 +6,14 @@ const commentRouter = express.Router();
 
 commentRouter.route('')
     .get(commentController.getComment)
-    .post(commentController.createComment);
+    .post(jwtMiddleware, commentController.createComment);
 
 commentRouter.route('/:articleId')
     .get(commentController.getCommentById)
-    .put(commentController.updateCommentById)
-    .delete(commentController.deleteCommentById);
+    .put(jwtMiddleware, commentController.updateCommentById)
+    .delete(jwtMiddleware, commentController.deleteCommentById);
 
 commentRouter.put('/:commentId/toggle-like', jwtMiddleware, commentController.updateCommentLike);
+
 
 module.exports = commentRouter;
