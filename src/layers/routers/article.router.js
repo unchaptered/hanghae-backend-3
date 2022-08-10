@@ -6,12 +6,12 @@ const articleRouter = express.Router();
 
 articleRouter.route('')
     .get(articleController.getArticle)
-    .post(jwtmiddleware , articleController.createArtilce);
+    .post(jwtmiddleware, articleController.createArtilce);
 
 articleRouter.route('/:articleId')
     .get(articleController.getArticleById)
-    .put(articleController.updateArticleById)
-    .delete(articleController.deleteArticleById);
+    .put(jwtmiddleware, articleController.updateArticleById)
+    .delete(jwtmiddleware, articleController.deleteArticleById);
 
 
 articleRouter.put('/:articleId/toggle-like', articleController.updateArticleLike);
