@@ -10,8 +10,8 @@ articleRouter.route('')
 
 articleRouter.route('/:articleId')
     .get(articleController.getArticleById)
-    .put(articleController.updateArticleById)
-    .delete(articleController.deleteArticleById);
+    .put(jwtMiddleware, articleController.updateArticleById)
+    .delete(jwtMiddleware, articleController.deleteArticleById);
 
 
 articleRouter.put('/:articleId/toggle-like', articleController.updateArticleLike);
