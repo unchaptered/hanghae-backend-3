@@ -1,5 +1,7 @@
-const authService = require('../services/auth.service');
 const Joi = require("joi");
+
+const authService = require('../services/auth.service');
+
 
 
 /**
@@ -34,7 +36,7 @@ const join = async (req, res, next) => {
 /**
  * 로그인 API
  * @param {Request} req 
- * @param {Response}} res 
+ * @param {Response} res 
  * @param {*} next 
  * @returns 
  */

@@ -26,7 +26,7 @@ const join = async (poolConnection, userDto) => {
     const queryResult = await poolConnection.query(joinQuery);
 
     const insertResult = queryResult[0];
-
+    
     if (insertResult.affectedRows !== 1) return null;
     else return ({
         nickname : userDto.nickname
@@ -37,14 +37,14 @@ const join = async (poolConnection, userDto) => {
 const login = async (poolConnection, userDto) => {
     
     const loginQuery = `
-        SELECT nickname FROM user
+        SELECT user_id FROM user
             WHERE nickname = "${userDto.nickname}" AND password = "${userDto.password}";`;
 
     const queryResult = await poolConnection.query(loginQuery);
     const selectResult = queryResult[0];
     if (selectResult.length === 0) return null;
     else return ({
-        nickname : userDto.nickname
+        userid : selectResult[0]
     });
  
 }
