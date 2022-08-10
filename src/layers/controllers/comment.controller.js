@@ -130,10 +130,7 @@ const deleteCommentById = async (req, res, next) => {
 
 const updateCommentLike = async (req, res, next) => {
     const {commentId} = req.params;
-    const {isLike} = req.body;
-
-    const testUserId = 1;
-    const testCommentId = 1;
+    const {isLike, userId} = req.body;        
 
     try {
 
@@ -141,9 +138,9 @@ const updateCommentLike = async (req, res, next) => {
             userId: joi.number().required(),
             commentId: joi.number().required(),
             isLike: joi.boolean().required()
-        }).validateAsync({userId:testUserId, commentId:testCommentId, isLike});
+        }).validateAsync({userId, commentId, isLike});
 
-        const result = await commentService.updateCommentLike(testUserId, testCommentId, isLike);
+        const result = await commentService.updateCommentLike(userId, commentId, isLike);
         return res.status(200).json(result);
 
     } catch (err) {
