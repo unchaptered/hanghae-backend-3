@@ -18,18 +18,18 @@ const isExists = async (poolConnection, userId) => {
 
 }
 
-const join = async (poolConnection, userDto) => {
+const join = async (poolConnection, nickname, password) => {
 
     const joinQuery = `
         INSERT INTO user (nickname, password) 
-            VALUES ("${userDto.nickname}", "${userDto.password}");`;
+            VALUES ("${nickname}", "${password}");`;
     const queryResult = await poolConnection.query(joinQuery);
 
     const insertResult = queryResult[0];
     
     if (insertResult.affectedRows !== 1) return null;
     else return ({
-        nickname : userDto.nickname
+        nickname : nickname
     });
 
 }
