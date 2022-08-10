@@ -1,3 +1,6 @@
+const jwt = require("jsonwebtoken");
+require('dotenv/config');
+
 const authRepository = require('../repositories/auth.repository');
 const pool = require("../../db");
 
@@ -41,11 +44,12 @@ const login = async (userDto) => {
         const isLogined = await authRepository.login(poolConnection, userDto);
         if (isLogined === null) 
             throw new Error('로그인에 실패하였습니다.');
-
+        
         await poolConnection.commit();
         poolConnection.release();
-
-        return "로그인에 성공하였습니다.";
+        const {user_id} = isLogined.userid;
+        token = jwt.sign({userid:user_id}, process.env.JWT_SECRET);
+        return ( { message :"로그인에 성공하였습니다.", token : token});
         
 
     } catch (err) {

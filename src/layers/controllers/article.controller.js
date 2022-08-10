@@ -24,18 +24,17 @@ const getArticle = async (req, res, next) => {
 /** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
 const createArtilce = async (req, res, next) => {
 
-    const testUserId = 1;
-    const { title, content } = req.body;
+    const { title, content, userid } = req.body;
 
     try {
 
         await joi.object({
-            userId: joi.number().required(),
+            userid: joi.number().required(),
             title: joi.string().min(1).max(50).required(),
             content: joi.string().min(1).max(250).required()
-        }).validateAsync({ userId: testUserId, title, content });
+        }).validateAsync({ title, content, userid });
 
-        const result = await articleService.createArticle(testUserId, title, content);
+        const result = await articleService.createArticle(userid, title, content);
 
         return res.status(200).json(result);
 
