@@ -48,7 +48,7 @@ const login = async (userDto) => {
         await poolConnection.commit();
         poolConnection.release();
         const {user_id} = isLogined.userid;
-        token = jwt.sign({userid:user_id}, process.env.JWT_SECRET);
+        token = jwt.sign({ userId:user_id}, process.env.JWT_SECRET);
         return ( { message :"로그인에 성공하였습니다.", token : token});
         
 
