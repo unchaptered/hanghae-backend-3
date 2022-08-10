@@ -3,6 +3,10 @@ const articleRepository = require('../repositories/article.repository');
 const authRepository = require('../repositories/auth.repository');
 
 
+/**
+ * 
+ * @returns { Promise< { articleId: number, userId: number, title: string, content: string } | string >}
+ */
 const getArticle = async () => {
 
     const poolConnection = await pool.getConnection();
@@ -30,10 +34,11 @@ const getArticle = async () => {
 }
 
 /**
+ * 
  * @param { number } userId
  * @param { string } title
  * @param { string } content
- * @returns { Promise< { articleId: number, userId: number, title: string, content: string } >}
+ * @returns { Promise< { articleId: number, userId: number, title: string, content: string } | string >}
  */
 const createArticle = async (userId, title, content) => {
 
@@ -48,7 +53,7 @@ const createArticle = async (userId, title, content) => {
         if (!isExists) throw new Error('존재하지 않는 사용자입니다.');
 
         const cretedArticle = await articleRepository.createArticle(poolConnection, userId, title, content);
-        if (isCreated === null) throw new Error('생성에 실패한 게시글입니다.');
+        if (cretedArticle === null) throw new Error('생성에 실패한 게시글입니다.');
 
         await poolConnection.commit();
         poolConnection.release();
@@ -67,7 +72,9 @@ const createArticle = async (userId, title, content) => {
 }
 
 /**
- * @param { number } articleId 
+ * 
+ * @param { number } articleId
+ * @returns { Promise< { articleId: number, userId: number, title: string, content: string } | string >}
  */
 const getArticleById = async (articleId) => {
 
@@ -100,10 +107,12 @@ const getArticleById = async (articleId) => {
 }
 
 /**
+ * 
  * @param { number } userId 
  * @param { number } articleId 
  * @param { string } title 
  * @param { string } content 
+ * @returns { Promise< { articleId: number, userId: number, title: string, content: string } | string > }
  */
 const updateArticleById = async (userId, articleId, title, content) => {
     const poolConnection = await pool.getConnection();
@@ -139,8 +148,10 @@ const updateArticleById = async (userId, articleId, title, content) => {
 }
 
 /**
+ * 
  * @param { number } userId 
  * @param { number } articleId 
+ * @returns { Promise< { articleId: number, userId: number, title: string, content: string } | string > }
  */
 const deleteArticleById = async (userId, articleId) => {
 

@@ -1,11 +1,10 @@
 const mysql = require('mysql2');
 
 /**
- * isExists 존재하는지 `확인` -> boolean
  * 
  * @param { mysql.PoolConnection } poolConnection 
  * @param { number } articleId 
- * @returns 
+ * @returns { Promise< boolean > }
  */
 const isExists = async (poolConnection, articleId) => {
 
@@ -51,7 +50,6 @@ const getArticleById = async (poolConnection, articleId) => {
 }
 
 /**
- * 생성하는 거(행동, 책임) -> 결과 ? -> { 생성된 객체 } or null( 실패 )
  * 
  * @param { mysql.PoolConnection } poolConnection 
  * @param { number } userId 
@@ -79,6 +77,7 @@ const createArticle = async (poolConnection, userId, title, content) => {
  * @param { number } articleId 
  * @param { string } title 
  * @param { string } content 
+ * @returns { Promise< boolean > }
  */
 const updateArticleById = async (poolConnection, articleId, title, content) => {
 
@@ -95,6 +94,7 @@ const updateArticleById = async (poolConnection, articleId, title, content) => {
  * 
  * @param { mysql.PoolConnection } poolConnection 
  * @param { number } articleId 
+ * @returns { Promise< boolean> }
  */
 const deleteArticleById = async (poolConnection, articleId) => {
     
