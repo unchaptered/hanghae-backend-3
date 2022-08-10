@@ -1,16 +1,17 @@
 const express = require('express');
-const articleController = require('../controllers/article.controller');
 
+const articleController = require('../controllers/article.controller');
+const jwtmiddleware = require('../../modules/jwt');
 const articleRouter = express.Router();
 
 articleRouter.route('')
     .get(articleController.getArticle)
-    .post(articleController.createArtilce);
+    .post(jwtmiddleware, articleController.createArtilce);
 
 articleRouter.route('/:articleId')
     .get(articleController.getArticleById)
-    .put(articleController.updateArticleById)
-    .delete(articleController.deleteArticleById);
+    .put(jwtmiddleware, articleController.updateArticleById)
+    .delete(jwtmiddleware, articleController.deleteArticleById);
 
 
 articleRouter.put('/:articleId/toggle-like', articleController.updateArticleLike);
