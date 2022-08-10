@@ -1,5 +1,6 @@
 const express = require('express');
 const commentController = require('../controllers/comment.controller');
+const jwtMiddleware = require('../../modules/jwt');
 
 const commentRouter = express.Router();
 
@@ -12,6 +13,6 @@ commentRouter.route('/:articleId')
     .put(commentController.updateCommentById)
     .delete(commentController.deleteCommentById);
 
-commentRouter.put('/:commentId/toggle-like', commentController.updateCommentLike);
+commentRouter.put('/:commentId/toggle-like', jwtMiddleware, commentController.updateCommentLike);
 
 module.exports = commentRouter;
