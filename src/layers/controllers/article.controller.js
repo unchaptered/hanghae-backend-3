@@ -46,7 +46,7 @@ const getArticleById = async (req, res, next) => {
             articleId: joi.number().required()
         }).validateAsync({ articleId });
 
-        const result = await rticleService.getArticleById(articleId);
+        const result = await articleService.getArticleById(articleId);
 
         return res.json(result);
 
@@ -61,7 +61,7 @@ const getArticleById = async (req, res, next) => {
 /** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
 const updateArticleById = async (req, res, next) => {
 
-    const testUserId = 10;
+    const testUserId = 1;
     const { articleId } = req.params;
     const { title, content } = req.body;
 
@@ -74,7 +74,7 @@ const updateArticleById = async (req, res, next) => {
             content: joi.string().min(1).max(250).required()
         }).validateAsync({ userId: testUserId, articleId, title, content });
 
-        const result = articleService.updateArticleById(testUserId, articleId, title, content);
+        const result = await articleService.updateArticleById(testUserId, articleId, title, content);
 
         return res.json(result);
 
@@ -89,7 +89,7 @@ const updateArticleById = async (req, res, next) => {
 /** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
 const deleteArticleById = async (req, res, next) => {
 
-    const testUserId = 10;
+    const testUserId = 1;
     const { articleId } = req.params;
 
     try {
@@ -99,7 +99,7 @@ const deleteArticleById = async (req, res, next) => {
             articleId: joi.number().required()
         }).validateAsync({ userId: testUserId, articleId });
 
-        const result = articleService.deleteArticleById(testUserId, articleId);
+        const result = await articleService.deleteArticleById(testUserId, articleId);
         
         return res.json(result);
 
