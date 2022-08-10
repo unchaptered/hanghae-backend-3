@@ -1,16 +1,74 @@
 const mysql = require('mysql2');
 
 /**
- * 생성하는 거(행동, 책임) -> 결과 ? -> { 생성된 객체 } or null( 실패 )
+ * 
+ * @param { mysql.PoolConnection } poolConnection 
+ * @param { number } articleId 
+ * @returns { Promise< boolean > }
+ */
+const isExists = async (poolConnection, articleId) => {
+
+    const isExistsQuery = `SELECT * FROM article WHERE article_id = ${articleId};`;
+    const queryResult = await poolConnection.query(isExistsQuery);
+
+    const selectResult = queryResult[0];
+
+    return selectResult.length !== 0 ? true : false;
+
+}
+
+
+const isLikeExists = async (poolConnection, userId, articleId) => {
+
+    const isExistsQuery = `SELECT * FROM article_like WHERE article_id = ${articleId} AND user_Id = ${userId};`;
+    const queryResult = await poolConnection.query(isExistsQuery);
+    
+    const selectResult = queryResult[0];
+
+    return selectResult.length !== 0 ? true : false;
+
+}
+
+
+/**
+ * 
+ * @param { mysql.poolConnection } poolConnection 
+ * @returns { Promise< Array<{ articleId: number, userId: number, title: string, content: string }> > }
+ */
+const getArticle = async (poolConnection) => {
+
+    const selectQuery = `SELECT article_id as articleId, user_id as userId, title, content FROM article LIMIT 100`;
+    const queryResult = await poolConnection.query(selectQuery);
+
+    const selectResult = queryResult[0];
+
+    return selectResult;
+    
+}
+/**
+ * 
+ * @param { mysql.poolConnection } poolConnection 
+ * @param { number } articleId 
+ * @returns { Promise< { articleId: number, userId: number, title: string, content: string } | null >}
+ */
+const getArticleById = async (poolConnection, articleId) => {
+
+    const selectQuery = `SELECT article_id as articleId, user_id as userId, title, content FROM article WHERE article_id = ${articleId};`;
+    const queryResult = await poolConnection.query(selectQuery);
+
+    const selectResult = queryResult[0];
+    
+    return selectResult.length !== 0 ? selectResult[0] : null;
+
+}
+
+/**
  * 
  * @param { mysql.PoolConnection } poolConnection 
  * @param { number } userId 
  * @param { string } title 
- * @param { string } content 
- * @param { number } articleId
- * @param { number } likeId
- * @param { boolean } isLike: ;
- * @returns 
+ * @param { string } content
+ * @returns { Promise< { articleId: number, userId: number, title: string, content: string } | null > }
  */
 const createArticle = async (poolConnection, userId, title, content) => {
     
@@ -26,25 +84,22 @@ const createArticle = async (poolConnection, userId, title, content) => {
 
 }
 
-const isExists = async (poolConnection, articleId) => {
+/**
+ * 
+ * @param { mysql.PoolConnection } poolConnection 
+ * @param { number } articleId 
+ * @param { string } title 
+ * @param { string } content 
+ * @returns { Promise< boolean > }
+ */
+const updateArticleById = async (poolConnection, articleId, title, content) => {
 
-    const isExistsQuery = `SELECT * FROM article WHERE article_id = ${articleId};`;
-    const queryResult = await poolConnection.query(isExistsQuery);
-    
-    const selectResult = queryResult[0];
+    const updateQuery = `UPDATE article SET title = '${title}', content = '${content}' WHERE article_id = ${articleId};`;
+    const queryResult = await poolConnection.query(updateQuery);
 
-    return selectResult.length !== 0 ? true : false;
+    const updateResult = queryResult[0];
 
-}
-
-const isLikeExists = async (poolConnection, userId, articleId) => {
-
-    const isExistsQuery = `SELECT * FROM article_like WHERE article_id = ${articleId} AND user_Id = ${userId};`;
-    const queryResult = await poolConnection.query(isExistsQuery);
-    
-    const selectResult = queryResult[0];
-
-    return selectResult.length !== 0 ? true : false;
+    return updateResult.affectedRows === 1 ? true : false;
 
 }
 
@@ -59,6 +114,23 @@ const createArticleLike = async (poolConnection, userId, articleId, isLike) => {
     else return ({
         likeId: insertResult.insertId, userId, articleId, isLike
     });
+
+}
+
+/**
+ * 
+ * @param { mysql.PoolConnection } poolConnection 
+ * @param { number } articleId 
+ * @returns { Promise< boolean> }
+ */
+const deleteArticleById = async (poolConnection, articleId) => {
+    
+    const deleteQuery = `DELETE FROM article WHERE article_id = ${articleId};`;
+    const queryResult = await poolConnection.query(deleteQuery);
+
+    const deleteResult = queryResult[0];
+
+    return deleteResult.affectedRows === 1 ? true : false;
 
 }
 
@@ -78,9 +150,15 @@ const updateArticleLike = async (poolConnection, userId, articleId, isLike) => {
 
 
 module.exports = {
-    createArticle,
-    createArticleLike,
-    updateArticleLike,
+
     isExists,
-    isLikeExists
+    isLikeExists,
+    getArticle,
+    getArticleById,
+    createArticle,
+    updateArticleById,
+    createArticleLike,
+    deleteArticleById,
+    updateArticleLike,
+    
 }

@@ -4,6 +4,21 @@ const articleService = require('../services/article.service');
 
 /** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
 const getArticle = async (req, res, next) => {
+
+    try {
+            
+        const result = await articleService.getArticle();
+
+        return res.status(200).json(result);
+
+    } catch(err) {
+
+        console.log(err);
+
+        return res.status(500).json(err.message);
+
+    }
+
 }
 
 /** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
@@ -20,7 +35,7 @@ const createArtilce = async (req, res, next) => {
             content: joi.string().min(1).max(250).required()
         }).validateAsync({ userId: testUserId, title, content });
 
-        const result = await articleService.createArtilce(testUserId, title, content);
+        const result = await articleService.createArticle(testUserId, title, content);
 
         return res.status(200).json(result);
 
@@ -42,9 +57,11 @@ const getArticleById = async (req, res, next) => {
 
     try {
 
-        const result = await joi.object({
+        await joi.object({
             articleId: joi.number().required()
         }).validateAsync({ articleId });
+
+        const result = await articleService.getArticleById(articleId);
 
         return res.json(result);
 
@@ -59,18 +76,20 @@ const getArticleById = async (req, res, next) => {
 /** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
 const updateArticleById = async (req, res, next) => {
 
-    const testUserId = 10;
+    const testUserId = 1;
     const { articleId } = req.params;
     const { title, content } = req.body;
 
     try {
 
-        const result = await joi.object({
+        await joi.object({
             userId: joi.number().required(),
             articleId: joi.number().required(),
             title: joi.string().min(1).max(50).required(),
             content: joi.string().min(1).max(250).required()
         }).validateAsync({ userId: testUserId, articleId, title, content });
+
+        const result = await articleService.updateArticleById(testUserId, articleId, title, content);
 
         return res.json(result);
 
@@ -85,16 +104,18 @@ const updateArticleById = async (req, res, next) => {
 /** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
 const deleteArticleById = async (req, res, next) => {
 
-    const testUserId = 10;
+    const testUserId = 1;
     const { articleId } = req.params;
 
     try {
 
-        const result = await joi.object({
+        await joi.object({
             userId: joi.number().required(),
             articleId: joi.number().required()
         }).validateAsync({ userId: testUserId, articleId });
 
+        const result = await articleService.deleteArticleById(testUserId, articleId);
+        
         return res.json(result);
 
     } catch(err) {
