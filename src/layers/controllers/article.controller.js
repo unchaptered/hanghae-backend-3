@@ -126,20 +126,17 @@ const deleteArticleById = async (req, res, next) => {
 
 const updateArticleLike = async (req, res, next) => {
     const {articleId} = req.params;
-    const {isLike} = req.body;    
-
-    const testUserId = 2;
-    const testArticleId = 1;
-
+    const {isLike, userId} = req.body;       
+    
     try {
 
         await joi.object({
             userId: joi.number().required(),
             articleId: joi.number().required(),
             isLike: joi.boolean().required()
-        }).validateAsync({userId:testUserId, articleId:testArticleId, isLike});
+        }).validateAsync({userId, articleId, isLike});
 
-        const result = await articleService.updateArticleLike(testUserId, testArticleId, isLike);
+        const result = await articleService.updateArticleLike(userId, articleId, isLike);
         return res.status(200).json(result);
 
     } catch (err) {
