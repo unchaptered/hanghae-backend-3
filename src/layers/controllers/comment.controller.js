@@ -7,19 +7,27 @@ const getComment = async (req, res, next) => {
 const createComment = async (req, res, next) => {
 
     const testUserId = 1;
+    const testArticleId = 1;
+    
     const { content } = req.body;
 
     try {
 
-        const result = await joi.object({
+        await joi.object({
+            userId: joi.number().required(),
+            articleId: joi.number().required(),
             content: joi.string().min(1).max(250).required()
-        }).validateAsync({ content });
+        }).validateAsync({ userId: testUserId, articleId: testArticleId, content });
 
-        return res.json(result);
+        const result = await commentService.createComment(testUserId, testAritcleId,  title, content);
+        
+        return res.status(200).json(result);
 
     } catch(err) {
 
-        return res.json(err.message);
+        console.log(err);
+
+        return res.status(500).json(err.message);
 
     }
 
@@ -73,6 +81,7 @@ const getCommentById = async (req, res, next) => {
 const updateCommentById = async (req, res, next) => {
 
     const testUserId = 10;
+    const testArticeId = 10;
     const { commentId } = req.params;
     const { content } = req.body;
 
@@ -83,7 +92,7 @@ const updateCommentById = async (req, res, next) => {
             articleId: joi.number().required(),
             commentId: joi.number().required(),
             content: joi.string().min(1).max(250).required()
-        }).validateAsync({ userId: testUserId, articleId, commentId, content });
+        }).validateAsync({ userId: testUserId, articleId: testArticeId, commentId, content });
 
         return res.json(result);
 
@@ -97,6 +106,7 @@ const updateCommentById = async (req, res, next) => {
 const deleteCommentById = async (req, res, next) => {
 
     const testUserId = 10;
+    const testArticleId = 10;
     const { commentId } = req.params;
 
     try {
@@ -105,7 +115,7 @@ const deleteCommentById = async (req, res, next) => {
             userId: joi.number().required(),
             articleId: joi.number().required(),
             commentId: joi.number().required()
-        }).validateAsync({ userId: testUserId, articleId, commentId });
+        }).validateAsync({ userId: testUserId, articleId:testArticleId, commentId });
 
         return res.json(result);
 
@@ -120,10 +130,8 @@ module.exports = {
 
     getComment,
     createComment,
-
     updateCommentById,
     deleteCommentById,
     getCommentById,
-
     updateCommentLike,
 }
