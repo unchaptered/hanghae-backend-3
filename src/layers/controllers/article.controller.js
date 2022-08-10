@@ -128,7 +128,7 @@ const updateArticleLike = async (req, res, next) => {
     const {articleId} = req.params;
     const {isLike} = req.body;    
 
-    const testUserId = 2;
+    const testUserId = 4;
     const testArticleId = 1;
 
     try {
