@@ -14,6 +14,6 @@ articleRouter.route('/:articleId')
     .delete(jwtMiddleware, articleController.deleteArticleById);
 
 
-articleRouter.put('/:articleId/toggle-like', jwtmiddleware, articleController.updateArticleLike);
+articleRouter.put('/:articleId/toggle-like', jwtMiddleware, articleController.updateArticleLike);
 
 module.exports = articleRouter;
