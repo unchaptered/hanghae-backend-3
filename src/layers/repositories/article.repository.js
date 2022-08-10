@@ -21,6 +21,21 @@ const isExists = async (poolConnection, articleId) => {
 /**
  * 
  * @param { mysql.poolConnection } poolConnection 
+ * @returns { Promise< Array<{ articleId: number, userId: number, title: string, content: string }> > }
+ */
+const getArticle = async (poolConnection) => {
+
+    const selectQuery = `SELECT article_id as articleId, user_id as userId, title, content FROM article LIMIT 100`;
+    const queryResult = await poolConnection.query(selectQuery);
+
+    const selectResult = queryResult[0];
+
+    return selectResult;
+    
+}
+/**
+ * 
+ * @param { mysql.poolConnection } poolConnection 
  * @param { number } articleId 
  * @returns { Promise< { articleId: number, userId: number, title: string, content: string } | null >}
  */
@@ -96,6 +111,7 @@ module.exports = {
 
     isExists,
 
+    getArticle,
     getArticleById,
     createArticle,
     updateArticleById,

@@ -4,6 +4,21 @@ const articleService = require('../services/article.service');
 
 /** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
 const getArticle = async (req, res, next) => {
+
+    try {
+            
+        const result = await articleService.getArticle();
+
+        return res.status(200).json(result);
+
+    } catch(err) {
+
+        console.log(err);
+
+        return res.status(500).json(err.message);
+
+    }
+
 }
 
 /** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */

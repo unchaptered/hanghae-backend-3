@@ -2,6 +2,33 @@ const pool = require('../../db');
 const articleRepository = require('../repositories/article.repository');
 const authRepository = require('../repositories/auth.repository');
 
+
+const getArticle = async () => {
+
+    const poolConnection = await pool.getConnection();
+
+    try {
+        
+        await poolConnection.beginTransaction();
+
+        const result = await articleRepository.getArticle(poolConnection);
+
+        await poolConnection.commit();
+        poolConnection.release();
+
+        return result;
+
+    } catch(err) {
+
+        await poolConnection.rollback();
+        poolConnection.release();
+
+        return `${err.name} : ${err.message}`;
+
+    }
+
+}
+
 /**
  * @param { number } userId
  * @param { string } title
@@ -131,7 +158,7 @@ const deleteArticleById = async (userId, articleId) => {
         const isDeleted = await articleRepository.deleteArticleById(poolConnection, articleId);
         if (!isDeleted) throw new Error('알 수 없는 에러로 게시글 삭제에 실패하였습니다.');
 
-        await poolConnection.rollback();
+        await poolConnection.commit();
         poolConnection.release();
 
         return result;
@@ -152,6 +179,7 @@ const deleteArticleById = async (userId, articleId) => {
 
 module.exports = {
 
+    getArticle,
     createArticle,
     getArticleById,
     updateArticleById,
