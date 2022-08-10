@@ -1,9 +1,12 @@
+const e = require('express');
 const joi = require('joi');
 const articleService = require('../services/article.service');
 
+/** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
 const getArticle = async (req, res, next) => {
 }
 
+/** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
 const createArtilce = async (req, res, next) => {
 
     const testUserId = 1;
@@ -32,6 +35,7 @@ const createArtilce = async (req, res, next) => {
 }
 
 
+/** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
 const getArticleById = async (req, res, next) => {
 
     const { articleId } = req.params;
@@ -52,6 +56,7 @@ const getArticleById = async (req, res, next) => {
 
 }
 
+/** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
 const updateArticleById = async (req, res, next) => {
 
     const testUserId = 10;
@@ -76,6 +81,8 @@ const updateArticleById = async (req, res, next) => {
     }
     
 }
+
+/** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
 const deleteArticleById = async (req, res, next) => {
 
     const testUserId = 10;
@@ -98,11 +105,30 @@ const deleteArticleById = async (req, res, next) => {
 }
 
 
-const updateArticleLike = (req, res, next) => {
+const updateArticleLike = async (req, res, next) => {
     const {articleId} = req.params;
-    const {isLike} = req.body;
+    const {isLike} = req.body;    
 
-    console.log(req.params, articleId, isLike);
+    const testUserId = 2;
+    const testArticleId = 1;
+
+    try {
+
+        await joi.object({
+            userId: joi.number().required(),
+            articleId: joi.number().required(),
+            isLike: joi.boolean().required()
+        }).validateAsync({userId:testUserId, articleId:testArticleId, isLike});
+
+        const result = await articleService.updateArticleLike(testUserId, testArticleId, isLike);
+        return res.status(200).json(result);
+
+    } catch (err) {
+
+        return res.json(err.message);
+
+    }
+    
 };
 
 module.exports = {
