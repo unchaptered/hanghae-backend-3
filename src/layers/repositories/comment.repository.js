@@ -9,6 +9,17 @@ const mysql = require('mysql2');
  * @param { string } content : ;
  * @returns 
  */
+
+ const isExistsArticle = async (poolConnection, userId) => {
+
+    const isExistsQuery = `SELECT * FROM article WHERE article_id = ${articleId};`;
+    const queryResult = await poolConnection.query(isExistsQuery);
+
+    const selectResult = queryResult[0];
+
+    return selectResult.length !== 0 ? true : false;
+
+}
 const createComment = async (poolConnection, userId, articleId, content) => {
     
     const createQuery = `INSERT INTO comment (user_id, articleId, content) VALUES (${userId}, '${articleId}', '${content}');`;
@@ -24,5 +35,6 @@ const createComment = async (poolConnection, userId, articleId, content) => {
 }
 
 module.exports = {
-    createComment
+    createComment,
+    isExistsArticle
 }
