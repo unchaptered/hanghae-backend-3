@@ -3,6 +3,7 @@ require('dotenv/config');
 
 const authRepository = require('../repositories/auth.repository');
 const pool = require("../../db");
+const {bcryptPassword} = require("../../modules/bcrypt");
 
 const join = async (userDto) => {
 
@@ -15,8 +16,9 @@ const join = async (userDto) => {
         if (userDto.password !== userDto.confirm) 
             throw new Error('패스워드와 패스워드 확인이 일치하지 않습니다.');
         
+        const password = await bcryptPassword(userDto.password); console.log(password);
 
-        const isCreated = await authRepository.join(poolConnection, userDto);
+        const isCreated = await authRepository.join(poolConnection, userDto.nickname, password);
         if (isCreated === null) throw new Error('회원가입에 실패하였습니다.');
         
         await poolConnection.commit();
