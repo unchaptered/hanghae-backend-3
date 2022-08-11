@@ -21,18 +21,15 @@ const createArtilce = async (req, res) => {
     const { title, content, userId } = req.body;
 
     try {
-        await joi.object({
+        await joi
+            .object({
                 userId: joi.number().required(),
                 title: joi.string().min(1).max(50).required(),
                 content: joi.string().min(1).max(250).required(),
             })
             .validateAsync({ title, content, userId });
 
-        const result = await articleService.createArticle(
-            userId,
-            title,
-            content,
-        );
+        const result = await articleService.createArticle(userId, title, content);
 
         return res.status(200).json(result);
     } catch (err) {
@@ -76,12 +73,7 @@ const updateArticleById = async (req, res) => {
             })
             .validateAsync({ userId, articleId, title, content });
 
-        const result = await articleService.updateArticleById(
-            userId,
-            articleId,
-            title,
-            content,
-        );
+        const result = await articleService.updateArticleById(userId, articleId, title, content);
 
         return res.json(result);
     } catch (err) {
@@ -102,10 +94,7 @@ const deleteArticleById = async (req, res) => {
             })
             .validateAsync({ userId: userid, articleId });
 
-        const result = await articleService.deleteArticleById(
-            userid,
-            articleId,
-        );
+        const result = await articleService.deleteArticleById(userid, articleId);
 
         return res.json(result);
     } catch (err) {
@@ -126,11 +115,7 @@ const updateArticleLike = async (req, res) => {
             })
             .validateAsync({ userId, articleId, isLike });
 
-        const result = await articleService.updateArticleLike(
-            userId,
-            articleId,
-            isLike,
-        );
+        const result = await articleService.updateArticleLike(userId, articleId, isLike);
         return res.status(200).json(result);
     } catch (err) {
         return res.json(err.message);
