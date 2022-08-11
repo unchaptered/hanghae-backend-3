@@ -21,8 +21,7 @@ const createArtilce = async (req, res) => {
     const { title, content, userId } = req.body;
 
     try {
-        await joi
-            .object({
+        await joi.object({
                 userId: joi.number().required(),
                 title: joi.string().min(1).max(50).required(),
                 content: joi.string().min(1).max(250).required(),
