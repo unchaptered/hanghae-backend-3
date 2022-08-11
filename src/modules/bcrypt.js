@@ -1,14 +1,18 @@
 const bcrypt = require('bcrypt');
 require('dotenv/config');
 
-const saltRounds = process.env.BCRYPT_SALT;
+class Bcrypt {
+    saltRounds;
 
-async function bcryptPassword(password) {
-    //salt 생성
-    hashedpassword = await bcrypt.hash(password, +saltRounds);
-    return hashedpassword;
+    constructor() {
+        this.saltRounds = process.env.BCRYPT_SALT;
+    }
+
+    bcryptPassword = async function (password) {
+        //salt 생성
+        hashedpassword = await bcrypt.hash(password, +saltRounds);
+        return hashedpassword;
+    };
 }
 
-module.exports = {
-    bcryptPassword,
-};
+module.exports = Bcrypt;
