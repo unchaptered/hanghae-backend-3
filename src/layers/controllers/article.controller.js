@@ -3,10 +3,10 @@ const joi = require('joi');
 const articleService = require('../services/article.service');
 
 /** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
-const getArticle = async (req, res, next) => {
+const getArticle = async (req, res) => {
 
     try {
-            
+        console.log('hello');
         const result = await articleService.getArticle();
 
         return res.status(200).json(result);
@@ -22,7 +22,7 @@ const getArticle = async (req, res, next) => {
 }
 
 /** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
-const createArtilce = async (req, res, next) => {
+const createArtilce = async (req, res) => {
 
     const { title, content, userId } = req.body;
 
@@ -50,7 +50,7 @@ const createArtilce = async (req, res, next) => {
 
 
 /** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
-const getArticleById = async (req, res, next) => {
+const getArticleById = async (req, res) => {
 
     const { articleId } = req.params;
 
@@ -73,7 +73,7 @@ const getArticleById = async (req, res, next) => {
 }
 
 /** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
-const updateArticleById = async (req, res, next) => {
+const updateArticleById = async (req, res) => {
 
     const { articleId } = req.params;
     const { title, content, userId } = req.body;
@@ -100,7 +100,7 @@ const updateArticleById = async (req, res, next) => {
 }
 
 /** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
-const deleteArticleById = async (req, res, next) => {
+const deleteArticleById = async (req, res) => {
 
     const { articleId } = req.params;
     const { userid } = req.body;
@@ -124,7 +124,7 @@ const deleteArticleById = async (req, res, next) => {
 }
 
 
-const updateArticleLike = async (req, res, next) => {
+const updateArticleLike = async (req, res) => {
     const {articleId} = req.params;
     const {isLike, userId} = req.body;       
     

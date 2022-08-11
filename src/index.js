@@ -12,8 +12,6 @@ const commentRouter = require('./layers/routers/comment.router');
 
 const app = express();
 
-console.log('hello');
-
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
