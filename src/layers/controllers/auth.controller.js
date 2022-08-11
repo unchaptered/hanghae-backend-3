@@ -44,6 +44,8 @@ const login = async (req, res, next) => {
 
     try {
 
+        console.log('hello');
+
         const userDto = await Joi.object({
             nickname: Joi.string().min(2).max(15).required(),
             password: Joi.string().min(4).max(20).required(),
