@@ -54,10 +54,10 @@ const createComment = async (userId,articleId, content) => {
         const isExists = await authRepository.isExists(poolConnection, userId);
         if (!isExists) throw new Error('존재하지 않는 사용자입니다.');
 
-        const isExistsArticle = await articleRepository.isExistsArticle(poolConnection, articleId);
-        if (!isExistsArticle) throw new Error('존재하지 않는 게시글입니다.');
+        const getArticleById = await articleRepository.getArticleById(poolConnection, articleId);
+        if (!getArticleById) throw new Error('존재하지 않는 게시글입니다.');
 
-        const createComment = await articleRepository.createComment(poolConnection, userId, articleId, content);
+        const createComment = await commentRepository.createComment(poolConnection, userId, articleId, content);
         if (createComment === null) throw new Error('생성에 실패한 댓글입니다.');
 
         await poolConnection.commit();
@@ -159,7 +159,7 @@ const updateCommentById = async (userId, commentId, articleId, content) => {
  * @param { number } commentId
  * @returns { Promise< { commentId: number, userId: number, articleId: number, content: string } | string > }
  */
-const deleteCommentById = async (userId, articleId, commentId) => {
+const deleteCommentById = async (userId, commentId) => {
 
     const poolConnection = await pool.getConnection();
 

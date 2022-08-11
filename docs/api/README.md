@@ -15,10 +15,10 @@
 | 게시글 수정       | PUT /article/:id              | { title, content } | - | @unchaptered |
 | 게시글 삭제       | DELETE /article/:id           | - | - | @unchaptered |
 | 게시글 좋아요     | PUT /article/:id/toggle-like  | { isLike } | - | @rumaro122  |
-| 댓글 작성         | POST /comment                 | | - | @JeungHoSub |
+| 댓글 작성         | POST /comment/:articleId                | { content }| -  | @JeungHoSub |
 | 댓글 조회         | GET /comment                  | | - | @JeungHoSub |
-| 댓글 수정         | PUT /comment/:id              | | - | @JeungHoSub |
-| 댓글 삭제         | DELETE /comment/:id           | | - | @JeungHoSub |
+| 댓글 수정         | PUT /comment/:commentId              | | - | @JeungHoSub |
+| 댓글 삭제         | DELETE /comment/:commentId           | | - | @JeungHoSub |
 | 댓글 좋아요       | PUT /comment/:id/toggle-like  | { isLike } | - | @rumaro122  |
 
 ### 하위 문서 목록
