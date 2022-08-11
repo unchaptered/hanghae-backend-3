@@ -1,9 +1,7 @@
 const jwt = require('jsonwebtoken');
 require('dotenv/config');
 
-module.exports = async (req, res, next) => {
-    const poolConnection = await pool.getConnection();
-
+module.exports = async (req, res, next) => {    
     try {
         const { authorization } = req.headers;
         const [authType, authToken] = (authorization || '').split(' ');
