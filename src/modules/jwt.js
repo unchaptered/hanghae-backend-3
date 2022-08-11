@@ -6,8 +6,10 @@ const pool = require('../../src/db');
 
 module.exports = async (req, res, next) => {
 
+    const poolConnection = await pool.getConnection();
+
     try {
-        
+
         const { authorization } = req.headers;
         const [authType, authToken] = (authorization || "").split(" ");
 
@@ -16,7 +18,9 @@ module.exports = async (req, res, next) => {
         }
 
         const { userId } = jwt.verify(authToken, process.env.JWT_SECRET);
-        console.log("userid", userId);
+
+        // const isExists = await authRepository.isExists(poolConnection, userId);
+        // if (!isExists) throw new Error('로그인 후 이용 가능한 기능입니다.');
 
         req.body.userId = +userId;
         next();

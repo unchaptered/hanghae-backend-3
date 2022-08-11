@@ -76,7 +76,7 @@ const getArticleById = async (req, res, next) => {
 const updateArticleById = async (req, res, next) => {
 
     const { articleId } = req.params;
-    const { title, content, userid } = req.body;
+    const { title, content, userId } = req.body;
 
     try {
 
@@ -85,9 +85,9 @@ const updateArticleById = async (req, res, next) => {
             articleId: joi.number().required(),
             title: joi.string().min(1).max(50).required(),
             content: joi.string().min(1).max(250).required()
-        }).validateAsync({ userId: userid, articleId, title, content });
+        }).validateAsync({ userId, articleId, title, content });
 
-        const result = await articleService.updateArticleById(userid, articleId, title, content);
+        const result = await articleService.updateArticleById(userId, articleId, title, content);
 
         return res.json(result);
 
