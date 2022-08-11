@@ -6,12 +6,16 @@ const commentRouter = express.Router();
 
 commentRouter.route('')
     .get(commentController.getComment)
-    .post(jwtMiddleware, commentController.createComment);
+    
 
 commentRouter.route('/:articleId')
-    .get(commentController.getCommentById)
+    .post(jwtMiddleware, commentController.createComment);
+
+
+commentRouter.route('/:commentId')    
     .put(jwtMiddleware, commentController.updateCommentById)
     .delete(jwtMiddleware, commentController.deleteCommentById);
+
 
 commentRouter.put('/:commentId/toggle-like', jwtMiddleware, commentController.updateCommentLike);
 
