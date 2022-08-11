@@ -24,17 +24,17 @@ const getArticle = async (req, res, next) => {
 /** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
 const createArtilce = async (req, res, next) => {
 
-    const { title, content, userid } = req.body;
+    const { title, content, userId } = req.body;
 
     try {
 
         await joi.object({
-            userid: joi.number().required(),
+            userId: joi.number().required(),
             title: joi.string().min(1).max(50).required(),
             content: joi.string().min(1).max(250).required()
-        }).validateAsync({ title, content, userid });
+        }).validateAsync({ title, content, userId });
 
-        const result = await articleService.createArticle(userid, title, content);
+        const result = await articleService.createArticle(userId, title, content);
 
         return res.status(200).json(result);
 
@@ -76,7 +76,7 @@ const getArticleById = async (req, res, next) => {
 const updateArticleById = async (req, res, next) => {
 
     const { articleId } = req.params;
-    const { title, content, userid } = req.body;
+    const { title, content, userId } = req.body;
 
     try {
 
@@ -85,9 +85,9 @@ const updateArticleById = async (req, res, next) => {
             articleId: joi.number().required(),
             title: joi.string().min(1).max(50).required(),
             content: joi.string().min(1).max(250).required()
-        }).validateAsync({ userId: userid, articleId, title, content });
+        }).validateAsync({ userId, articleId, title, content });
 
-        const result = await articleService.updateArticleById(userid, articleId, title, content);
+        const result = await articleService.updateArticleById(userId, articleId, title, content);
 
         return res.json(result);
 
@@ -126,20 +126,17 @@ const deleteArticleById = async (req, res, next) => {
 
 const updateArticleLike = async (req, res, next) => {
     const {articleId} = req.params;
-    const {isLike} = req.body;    
-
-    const testUserId = 2;
-    const testArticleId = 1;
-
+    const {isLike, userId} = req.body;       
+    
     try {
 
         await joi.object({
             userId: joi.number().required(),
             articleId: joi.number().required(),
             isLike: joi.boolean().required()
-        }).validateAsync({userId:testUserId, articleId:testArticleId, isLike});
+        }).validateAsync({userId, articleId, isLike});
 
-        const result = await articleService.updateArticleLike(testUserId, testArticleId, isLike);
+        const result = await articleService.updateArticleLike(userId, articleId, isLike);
         return res.status(200).json(result);
 
     } catch (err) {

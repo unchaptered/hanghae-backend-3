@@ -18,33 +18,44 @@ const isExists = async (poolConnection, userId) => {
 
 }
 
-const join = async (poolConnection, userDto) => {
+const getUserIdAndPassword = async (poolConnection, nickname) => {
+
+    const getPasswordQuery = `SELECT user_id, password FROM user WHERE nickname = '${nickname}';`;
+    const queryResult = await poolConnection.query(getPasswordQuery);
+
+    const selectResult = queryResult[0];
+    //console.log(selectResult);
+    return selectResult.length !== 0 ? selectResult[0] : false;
+
+}
+
+const join = async (poolConnection, nickname, password) => {
 
     const joinQuery = `
         INSERT INTO user (nickname, password) 
-            VALUES ("${userDto.nickname}", "${userDto.password}");`;
+            VALUES ("${nickname}", "${password}");`;
     const queryResult = await poolConnection.query(joinQuery);
 
     const insertResult = queryResult[0];
     
     if (insertResult.affectedRows !== 1) return null;
     else return ({
-        nickname : userDto.nickname
+        nickname : nickname
     });
 
 }
 
-const login = async (poolConnection, userDto) => {
+const login = async (poolConnection, nickname, password) => {
     
     const loginQuery = `
         SELECT user_id FROM user
-            WHERE nickname = "${userDto.nickname}" AND password = "${userDto.password}";`;
+            WHERE nickname = "${nickname}" AND password = "${password}";`;
 
     const queryResult = await poolConnection.query(loginQuery);
     const selectResult = queryResult[0];
     if (selectResult.length === 0) return null;
     else return ({
-        userid : selectResult[0]
+        userId : selectResult[0]
     });
  
 }
@@ -52,5 +63,6 @@ const login = async (poolConnection, userDto) => {
 module.exports = {
     join,
     login,
-    isExists
+    isExists,
+    getUserIdAndPassword 
 }
