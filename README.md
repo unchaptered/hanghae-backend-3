@@ -7,6 +7,22 @@
 
 ### 소개글
 
+항해99 숙련 주차의 과제에서 구현한 내용인
+
+1. 회원가입
+2. 로그인
+3. 글
+4. 댓글
+5. 글, 댓글 좋아요
+
+을 가지고 Layered Architecture Pattern을 적용하여
+
+1. controller (article, auth, comment)
+2. service (article, auth, comment)
+3. repository (article, auth, comment)
+
+구분하고, 숙련 주차과제를 개선하였습니다.
+
 ![](./Logic.png)
 
 <hr>
@@ -24,19 +40,10 @@
 
 > 문서 리스트를 확인하시려면 [자세히 보기](./docs/README.md) 를 클릭해주세요.
 
-1. [Git 관련 문서](./docs/git/README.md)
-    1. [Git 전략](./docs/git/Git-%EC%A0%84%EB%9E%B5.md)
-    2. [Git 문법](./docs/git/Git-%EB%AC%B8%EB%B2%95.md)
-    3. [Git 커밋규칙](./docs/git/Git-%EC%BB%A4%EB%B0%8B%EA%B7%9C%EC%B9%99.md)
-2. [기능 리스트](./docs/%EA%B8%B0%EB%8A%A5%20%EB%A6%AC%EC%8A%A4%ED%8A%B8.md)
-3. [API 리스트](./docs/api/README.md)
-    1. [Auth 명세서](./docs/api/auth.md)
-    2. [Article 명세서](./docs/api/article.md)
-    3. [Comment 명세서](./docs/api/comment.md)
-4. [테이블 명세서](./docs/sql/README.md)
-    1. [SQL Script](./docs/sql/default.sql)
-5. [Env 설정서](./docs/env/README.md)
-6. [함수 및 변수명](./docs/name/README.md)
+1. Git 관련 문서
+2. API 관련 문서
+3. DB 관련 문서
+4. 기타 문서
 
 <hr>
 
