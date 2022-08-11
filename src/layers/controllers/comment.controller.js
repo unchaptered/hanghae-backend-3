@@ -1,131 +1,131 @@
 const e = require('express');
 const joi = require('joi');
-const commentService = require('../services/comment.service');
+const CommentService = require('../services/comment.service');
 
-/** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
-const getComment = async (req, res, next) => {
-    try {
-        const result = await commentService.getComment();
+class CommentController {
+    commentService;
 
-        return res.status(200).json(result);
-    } catch (err) {
-        console.log(err);
-
-        return res.status(500).json(err.message);
+    constructor() {
+        this.commentService = new CommentService();
     }
-};
 
-/** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
-const createComment = async (req, res, next) => {
-    const { articleId } = req.params;
-    const { content, userId } = req.body;
+    /** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
+    getComment = async (req, res, next) => {
+        try {
+            const result = await this.commentService.getComment();
 
-    try {
-        await joi
-            .object({
-                userId: joi.number().required(),
-                articleId: joi.number().required(),
-                content: joi.string().min(1).max(250).required(),
-            })
-            .validateAsync({ userId, articleId, content });
+            return res.status(200).json(result);
+        } catch (err) {
+            console.log(err);
 
-        const result = await commentService.createComment(userId, articleId, content);
+            return res.status(500).json(err.message);
+        }
+    };
+    /** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
+    createComment = async (req, res, next) => {
+        const { articleId } = req.params;
+        const { content, userId } = req.body;
 
-        return res.status(200).json(result);
-    } catch (err) {
-        console.log(err);
+        try {
+            await joi
+                .object({
+                    userId: joi.number().required(),
+                    articleId: joi.number().required(),
+                    content: joi.string().min(1).max(250).required(),
+                })
+                .validateAsync({ userId, articleId, content });
 
-        return res.status(500).json(err.message);
-    }
-};
+            const result = await this.commentService.createComment(userId, articleId, content);
 
-/** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
-const getCommentById = async (req, res, next) => {
-    const { commentId } = req.params;
+            return res.status(200).json(result);
+        } catch (err) {
+            console.log(err);
 
-    try {
-        await joi
-            .object({
-                commentId: joi.number().required(),
-            })
-            .validateAsync({ commentId });
+            return res.status(500).json(err.message);
+        }
+    };
 
-        const result = await commentService.getCommentById(commentId);
+    /** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
+    getCommentById = async (req, res, next) => {
+        const { commentId } = req.params;
 
-        return res.json(result);
-    } catch (err) {
-        return res.json(err.message);
-    }
-};
+        try {
+            await joi
+                .object({
+                    commentId: joi.number().required(),
+                })
+                .validateAsync({ commentId });
 
-/** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
-const updateCommentById = async (req, res, next) => {
-    const { commentId } = req.params;
-    const { content, userId } = req.body;
+            const result = await this.commentService.getCommentById(commentId);
 
-    try {
-        await joi
-            .object({
-                userId: joi.number().required(),
-                commentId: joi.number().required(),
-                content: joi.string().min(1).max(250).required(),
-            })
-            .validateAsync({ userId, commentId, content });
+            return res.json(result);
+        } catch (err) {
+            return res.json(err.message);
+        }
+    };
 
-        const result = await commentService.updateCommentById(userId, commentId, content);
+    /** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
+    updateCommentById = async (req, res, next) => {
+        const { commentId } = req.params;
+        const { content, userId } = req.body;
 
-        return res.json(result);
-    } catch (err) {
-        return res.json(err.message);
-    }
-};
+        try {
+            await joi
+                .object({
+                    userId: joi.number().required(),
+                    commentId: joi.number().required(),
+                    content: joi.string().min(1).max(250).required(),
+                })
+                .validateAsync({ userId, commentId, content });
 
-/** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
-const deleteCommentById = async (req, res, next) => {
-    const { commentId } = req.params;
-    const { userId } = req.body;
+            const result = await this.commentService.updateCommentById(userId, commentId, content);
 
-    try {
-        await joi
-            .object({
-                userId: joi.number().required(),
-                commentId: joi.number().required(),
-            })
-            .validateAsync({ userId, commentId });
+            return res.json(result);
+        } catch (err) {
+            return res.json(err.message);
+        }
+    };
 
-        const result = await commentService.deleteCommentById(userId, commentId);
+    /** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
+    deleteCommentById = async (req, res, next) => {
+        const { commentId } = req.params;
+        const { userId } = req.body;
 
-        return res.json(result);
-    } catch (err) {
-        return res.json(err.message);
-    }
-};
+        try {
+            await joi
+                .object({
+                    userId: joi.number().required(),
+                    commentId: joi.number().required(),
+                })
+                .validateAsync({ userId, commentId });
 
-const updateCommentLike = async (req, res, next) => {
-    const { commentId } = req.params;
-    const { isLike, userId } = req.body;
+            const result = await this.commentService.deleteCommentById(userId, commentId);
 
-    try {
-        await joi
-            .object({
-                userId: joi.number().required(),
-                commentId: joi.number().required(),
-                isLike: joi.boolean().required(),
-            })
-            .validateAsync({ userId, commentId, isLike });
+            return res.json(result);
+        } catch (err) {
+            return res.json(err.message);
+        }
+    };
 
-        const result = await commentService.updateCommentLike(userId, commentId, isLike);
-        return res.status(200).json(result);
-    } catch (err) {
-        return res.json(err.message);
-    }
-};
+    updateCommentLike = async (req, res, next) => {
+        const { commentId } = req.params;
+        const { isLike, userId } = req.body;
 
-module.exports = {
-    getComment,
-    createComment,
-    updateCommentById,
-    deleteCommentById,
-    getCommentById,
-    updateCommentLike,
-};
+        try {
+            await joi
+                .object({
+                    userId: joi.number().required(),
+                    commentId: joi.number().required(),
+                    isLike: joi.boolean().required(),
+                })
+                .validateAsync({ userId, commentId, isLike });
+
+            const result = await this.commentService.updateCommentLike(userId, commentId, isLike);
+            return res.status(200).json(result);
+        } catch (err) {
+            return res.json(err.message);
+        }
+    };
+}
+
+module.exports = CommentController;

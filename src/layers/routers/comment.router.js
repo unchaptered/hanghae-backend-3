@@ -1,6 +1,8 @@
 const express = require('express');
-const commentController = require('../controllers/comment.controller');
+const CommentController = require('../controllers/comment.controller');
 const jwtMiddleware = require('../../modules/jwt');
+
+const commentController = new CommentController();
 
 const commentRouter = express.Router();
 
