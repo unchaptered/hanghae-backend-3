@@ -6,16 +6,7 @@ const mysql = require('mysql2');
  * @param { number } commentId 
  * @returns { Promise< boolean > }
  */
- const isExistsArticle = async (poolConnection, commentId) => {
-
-    const isExistsQuery = `SELECT * FROM comment WHERE comment_id = ${commentId};`;
-    const queryResult = await poolConnection.query(isExistsQuery);
-
-    const selectResult = queryResult[0];
-
-    return selectResult.length !== 0 ? true : false;
-
-}
+ 
 /**
  * 
  * @param { mysql.poolConnection } poolConnection 
@@ -60,12 +51,12 @@ const createComment = async (poolConnection, userId, articleId, content) => {
     
     const createQuery = `INSERT INTO comment (user_id, article_Id, content) VALUES (${userId}, '${articleId}', '${content}');`;
     const queryResult = await poolConnection.query(createQuery);
-
+    
     const insertResult = queryResult[0];
 
     if (insertResult.affectedRows !== 1) return null;
     else return ({
-        articleId: insertResult.insertId, userId, articleId, content
+        commentId: insertResult.insertId, userId, articleId, content
     });
 
 }
@@ -82,7 +73,7 @@ const updateCommentById = async (poolConnection, commentId, content) => {
 
     const updateQuery = `UPDATE comment SET content = '${content}' WHERE comment_id = ${commentId};`;
     const queryResult = await poolConnection.query(updateQuery);
-
+    console.log(queryResult)
     const updateResult = queryResult[0];
 
     return updateResult.affectedRows === 1 ? true : false;
@@ -164,7 +155,6 @@ module.exports = {
     updateCommentLike,
     isExists,
     isLikeExists,
-    isExistsArticle,
     getComment,
     getCommentById,
     createComment,
