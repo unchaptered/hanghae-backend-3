@@ -24,9 +24,8 @@ const getComment = async (req, res, next) => {
 /** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
 const createComment = async (req, res, next) => {
 
-    const testUserId = 1;
-    const testArticleId = 1;
-    const { content } = req.body;
+    const { articleId }  = req.params;
+    const { content, userId } = req.body;
 
     try {
 
@@ -34,9 +33,9 @@ const createComment = async (req, res, next) => {
             userId: joi.number().required(),
             articleId: joi.number().required(),
             content: joi.string().min(1).max(250).required()
-        }).validateAsync({ userId: testUserId, articleId: testArticleId, content });
+        }).validateAsync({ userId, articleId, content });
 
-        const result = await commentService.createComment(testUserId, testArticleId, content);
+        const result = await commentService.createComment(userId, articleId, content);
 
         return res.status(200).json(result);
 
@@ -76,21 +75,18 @@ const getCommentById = async (req, res, next) => {
 /** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
 const updateCommentById = async (req, res, next) => {
 
-    const testUserId = 1;
-    const testArticleId = 1;
     const { commentId } = req.params;
-    const { content } = req.body;
+    const { content,userId } = req.body;
 
     try {
 
         await joi.object({
             userId: joi.number().required(),
-            articleId: joi.number().required(),
             commentId: joi.number().required(),
             content: joi.string().min(1).max(250).required()
-        }).validateAsync({ userId: testUserId, articleId: testArticleId, content });
+        }).validateAsync({ userId, commentId, content });
 
-        const result = await commentService.updateCommentById(testUserId, testArticleId, commentId, content);
+        const result = await commentService.updateCommentById(userId, commentId, content);
 
         return res.json(result);
 
@@ -105,19 +101,17 @@ const updateCommentById = async (req, res, next) => {
 /** @param { e.Request } req @param { e.Response } res @param { e.NextFunction } next */
 const deleteCommentById = async (req, res, next) => {
 
-    const testUserId = 1;
-    const testArticleId = 1;
     const { commentId } = req.params;
+    const { userId } = req.body;
 
     try {
 
         await joi.object({
             userId: joi.number().required(),
-            articleId: joi.number().required(),
             commentId: joi.number().required()
-        }).validateAsync({ userId: testUserId, articleId: testArticleId });
+        }).validateAsync({ userId, commentId });
 
-        const result = await commentService.deleteCommentById(testUserId, testArticleId, commentId);
+        const result = await commentService.deleteCommentById(userId, commentId);
         
         return res.json(result);
 
