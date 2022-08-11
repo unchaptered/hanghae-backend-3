@@ -1,13 +1,15 @@
-const pool = require('../../db');
+const { DatabaseProvider } = require('../../modules/_.loader');
 const ArticleRepository = require('../repositories/article.repository');
 const AuthRepository = require('../repositories/auth.repository');
 
-class ArticleService {    
+class ArticleService {
     articleRepository;
+    databaseProvider;
 
-    constructor() {        
-        this.articleRepository = new ArticleRepository();        
+    constructor() {
+        this.articleRepository = new ArticleRepository();
         this.authRepository = new AuthRepository();
+        this.databaseProvider = new DatabaseProvider();
     }
 
     /**
@@ -15,7 +17,7 @@ class ArticleService {
      * @returns { Promise< { articleId: number, userId: number, title: string, content: string } | string >}
      */
     getArticle = async () => {
-        const poolConnection = await pool.getConnection();
+        const poolConnection = await this.databaseProvider.getConnection();
 
         try {
             await poolConnection.beginTransaction();
@@ -42,7 +44,7 @@ class ArticleService {
      * @returns { Promise< { articleId: number, userId: number, title: string, content: string } | string >}
      */
     createArticle = async (userId, title, content) => {
-        const poolConnection = await pool.getConnection();
+        const poolConnection = await this.databaseProvider.getConnection();
 
         try {
             await poolConnection.beginTransaction();
@@ -77,7 +79,7 @@ class ArticleService {
      * @returns { Promise< { articleId: number, userId: number, title: string, content: string } | string >}
      */
     getArticleById = async (articleId) => {
-        const poolConnection = await pool.getConnection();
+        const poolConnection = await this.databaseProvider.getConnection();
 
         try {
             await poolConnection.beginTransaction();
@@ -109,7 +111,7 @@ class ArticleService {
      * @returns { Promise< { articleId: number, userId: number, title: string, content: string } | string > }
      */
     updateArticleById = async (userId, articleId, title, content) => {
-        const poolConnection = await pool.getConnection();
+        const poolConnection = await this.databaseProvider.getConnection();
 
         try {
             await poolConnection.beginTransaction();
@@ -148,7 +150,7 @@ class ArticleService {
      * @returns { Promise< { articleId: number, userId: number, title: string, content: string } | string > }
      */
     deleteArticleById = async (userId, articleId) => {
-        const poolConnection = await pool.getConnection();
+        const poolConnection = await this.databaseProvider.getConnection();
 
         try {
             await poolConnection.beginTransaction();
@@ -158,7 +160,10 @@ class ArticleService {
             if (result === null) throw new Error('존재하지 않는 게시글입니다.');
             if (result.userId !== userId) throw new Error('게시글 작성자가 아닌 유저입니다.');
 
-            const isDeleted = await this.articleRepository.deleteArticleById(poolConnection, articleId);
+            const isDeleted = await this.articleRepository.deleteArticleById(
+                poolConnection,
+                articleId,
+            );
             if (!isDeleted) throw new Error('알 수 없는 에러로 게시글 삭제에 실패하였습니다.');
 
             await poolConnection.commit();
@@ -176,7 +181,7 @@ class ArticleService {
     };
 
     updateArticleLike = async (userId, articleId, isLike) => {
-        const poolConnection = await pool.getConnection();
+        const poolConnection = await this.databaseProvider.getConnection();
 
         try {
             await poolConnection.beginTransaction();
@@ -185,7 +190,10 @@ class ArticleService {
             const isUserExists = await this.authRepository.isExists(poolConnection, userId);
             if (!isUserExists) throw new Error('존재하지 않는 사용자입니다.');
 
-            const isArticleExists = await this.articleRepository.isExists(poolConnection, articleId);
+            const isArticleExists = await this.articleRepository.isExists(
+                poolConnection,
+                articleId,
+            );
             if (!isArticleExists) throw new Error('존재하지 않는 게시물입니다.');
 
             const isArticleLikeExists = await this.articleRepository.isLikeExists(

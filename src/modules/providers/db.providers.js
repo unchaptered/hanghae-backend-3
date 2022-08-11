@@ -22,6 +22,10 @@ class DatabaseProvider {
 
         return this.pool;
     }
+
+    async getConnection() {
+        return DatabaseProvider.pool.getConnection();
+    }
 }
 
 module.exports = DatabaseProvider;

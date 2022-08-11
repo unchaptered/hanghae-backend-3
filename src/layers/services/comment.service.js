@@ -1,4 +1,4 @@
-const pool = require('../../db');
+const { DatabaseProvider } = require('../../modules/_.loader');
 
 const ArticleRepository = require('../repositories/article.repository');
 const CommentRepository = require('../repositories/comment.repository');
@@ -8,11 +8,13 @@ class CommentService {
     articleRepository;
     commentRepository;
     authRepository;
+    databaseProvider;
 
     constructor() {
         this.articleRepository = new ArticleRepository();
         this.commentRepository = new CommentRepository();
         this.authRepository = new AuthRepository();
+        this.databaseProvider = new DatabaseProvider();
     }
 
     /**
@@ -20,7 +22,7 @@ class CommentService {
      * @returns { Promise< { commentId: number, userId: number, articleId: number, content: string } | string >}
      */
     getComment = async () => {
-        const poolConnection = await pool.getConnection();
+        const poolConnection = await this.databaseProvider.getConnection();
 
         try {
             await poolConnection.beginTransaction();
@@ -47,7 +49,7 @@ class CommentService {
      * @returns { Promise< { commentId: number, userId: number, articleId: number, content: string } | string >}
      */
     createComment = async (userId, articleId, content) => {
-        const poolConnection = await pool.getConnection();
+        const poolConnection = await this.databaseProvider.getConnection();
 
         try {
             await poolConnection.beginTransaction();
@@ -88,7 +90,7 @@ class CommentService {
      * @returns { Promise< { commentId: number, userId: number, comment: number, content: string } | string >}
      */
     getCommentById = async (commentId) => {
-        const poolConnection = await pool.getConnection();
+        const poolConnection = await this.databaseProvider.getConnection();
 
         try {
             await poolConnection.beginTransaction();
@@ -120,7 +122,7 @@ class CommentService {
      * @returns { Promise< { commentId: number, userId: number, articleId: number, content: string } | string > }
      */
     updateCommentById = async (userId, commentId, articleId, content) => {
-        const poolConnection = await pool.getConnection();
+        const poolConnection = await this.databaseProvider.getConnection();
 
         try {
             await poolConnection.beginTransaction();
@@ -160,7 +162,7 @@ class CommentService {
      * @returns { Promise< { commentId: number, userId: number, articleId: number, content: string } | string > }
      */
     deleteCommentById = async (userId, commentId) => {
-        const poolConnection = await pool.getConnection();
+        const poolConnection = await this.databaseProvider.getConnection();
 
         try {
             await poolConnection.beginTransaction();
@@ -191,7 +193,7 @@ class CommentService {
     };
 
     updateCommentLike = async (userId, commentId, isLike) => {
-        const poolConnection = await pool.getConnection();
+        const poolConnection = await this.databaseProvider.getConnection();
 
         try {
             await poolConnection.beginTransaction();
