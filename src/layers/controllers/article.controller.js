@@ -115,6 +115,7 @@ const updateArticleLike = async (req, res) => {
             })
             .validateAsync({ userId, articleId, isLike });
 
+        // eslint-disable-next-line prettier/prettier
         const result = await articleService.updateArticleLike(userId, articleId, isLike);
         return res.status(200).json(result);
     } catch (err) {
