@@ -1,5 +1,9 @@
 const mysql = require('mysql2');
 
+class AuthRepository {
+ 
+    constructor() {}
+
 /**
  * isExists 존재하는지 `확인` -> boolean
  *
@@ -7,7 +11,7 @@ const mysql = require('mysql2');
  * @param { number } userId
  * @returns
  */
-const isExists = async (poolConnection, userId) => {
+ isExists = async (poolConnection, userId) => {
     const isExistsQuery = `SELECT * FROM user WHERE user_id = ${userId};`;
     const queryResult = await poolConnection.query(isExistsQuery);
 
@@ -16,7 +20,7 @@ const isExists = async (poolConnection, userId) => {
     return selectResult.length !== 0 ? true : false;
 };
 
-const getUserIdAndPassword = async (poolConnection, nickname) => {
+getUserIdAndPassword = async (poolConnection, nickname) => {
     const getPasswordQuery = `SELECT user_id, password FROM user WHERE nickname = '${nickname}';`;
     const queryResult = await poolConnection.query(getPasswordQuery);
 
@@ -25,7 +29,7 @@ const getUserIdAndPassword = async (poolConnection, nickname) => {
     return selectResult.length !== 0 ? selectResult[0] : false;
 };
 
-const join = async (poolConnection, nickname, password) => {
+join = async (poolConnection, nickname, password) => {
     const joinQuery = `
         INSERT INTO user (nickname, password) 
             VALUES ("${nickname}", "${password}");`;
@@ -40,7 +44,7 @@ const join = async (poolConnection, nickname, password) => {
         };
 };
 
-const login = async (poolConnection, nickname, password) => {
+login = async (poolConnection, nickname, password) => {
     const loginQuery = `
         SELECT user_id FROM user
             WHERE nickname = "${nickname}" AND password = "${password}";`;
@@ -53,10 +57,7 @@ const login = async (poolConnection, nickname, password) => {
             userId: selectResult[0],
         };
 };
+}
 
-module.exports = {
-    join,
-    login,
-    isExists,
-    getUserIdAndPassword,
-};
+
+module.exports = AuthRepository;
