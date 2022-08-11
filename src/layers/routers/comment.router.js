@@ -1,23 +1,20 @@
 const express = require('express');
-const commentController = require('../controllers/comment.controller');
+const CommentController = require('../controllers/comment.controller');
 const jwtMiddleware = require('../../modules/jwt');
+
+const commentController = new CommentController();
 
 const commentRouter = express.Router();
 
-commentRouter.route('')
-    .get(commentController.getComment)
-    
+commentRouter.route('').get(commentController.getComment);
 
-commentRouter.route('/:articleId')
-    .post(jwtMiddleware, commentController.createComment);
+commentRouter.route('/:articleId').post(jwtMiddleware, commentController.createComment);
 
-
-commentRouter.route('/:commentId')    
+commentRouter
+    .route('/:commentId')
     .put(jwtMiddleware, commentController.updateCommentById)
     .delete(jwtMiddleware, commentController.deleteCommentById);
 
-
 commentRouter.put('/:commentId/toggle-like', jwtMiddleware, commentController.updateCommentLike);
-
 
 module.exports = commentRouter;

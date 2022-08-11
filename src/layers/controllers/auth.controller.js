@@ -1,67 +1,59 @@
-const Joi = require("joi");
+const Joi = require('joi');
 
-const authService = require('../services/auth.service');
+const AuthService = require('../services/auth.service');
 
+class AuthController {
+    authService;
 
-
-/**
- * 회원가입 API
- * @param {Request} req 
- * @param {Response} res 
- * @param {*} next 
- * @returns 
- */
-const join = async (req, res, next) => {
-    
-    try {
-        
-        const userDto = await Joi.object({
-            nickname: Joi.string().min(2).max(15).required(),
-            password: Joi.string().min(4).max(20).required(),
-            confirm: Joi.string().min(4).max(20).required()
-        }).validateAsync({ ...req.body});
-
-        const result = await authService.join(userDto);
-
-        return res.status(200).json(result);
-
-    } catch (err) {
-        console.log(err);
-        return res.status(400).json(err.message);
+    constructor() {
+        this.authService = new AuthService();
     }
 
+    /**
+     * 회원가입 API
+     * @param {Request} req
+     * @param {Response} res
+     * @param {*} next
+     * @returns
+     */
+    join = async (req, res, next) => {
+        try {
+            const userDto = await Joi.object({
+                nickname: Joi.string().min(2).max(15).required(),
+                password: Joi.string().min(4).max(20).required(),
+                confirm: Joi.string().min(4).max(20).required(),
+            }).validateAsync({ ...req.body });
 
-};
+            const result = await this.authService.join(userDto);
 
-/**
- * 로그인 API
- * @param {Request} req 
- * @param {Response} res 
- * @param {*} next 
- * @returns 
- */
-const login = async (req, res, next) => {
+            return res.status(200).json(result);
+        } catch (err) {
+            console.log(err);
+            return res.status(400).json(err.message);
+        }
+    };
 
-    try {
+    /**
+     * 로그인 API
+     * @param {Request} req
+     * @param {Response} res
+     * @param {*} next
+     * @returns
+     */
+    login = async (req, res, next) => {
+        try {
+            const userDto = await Joi.object({
+                nickname: Joi.string().min(2).max(15).required(),
+                password: Joi.string().min(4).max(20).required(),
+            }).validateAsync({ ...req.body });
 
-        const userDto = await Joi.object({
-            nickname: Joi.string().min(2).max(15).required(),
-            password: Joi.string().min(4).max(20).required(),
-        }).validateAsync({ ...req.body });
-
-        const result =  await authService.login(userDto);
-        return res.status(200).json(result);
-
-    } catch (err) {
-        console.log(err);
-        return res.status(400).json(err.message);
-    }
-
-
-};
-
-
-module.exports = {
-    join,
-    login
+            const result = await this.authService.login(userDto);
+            return res.status(200).json(result);
+        } catch (err) {
+            console.log(err);
+            return res.status(400).json(err.message);
+        }
+    };
 }
+
+module.exports = AuthController;
