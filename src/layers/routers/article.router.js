@@ -1,8 +1,9 @@
 const express = require('express');
-
-const articleController = require('../controllers/article.controller');
 const jwtMiddleware = require('../../modules/jwt');
 const articleRouter = express.Router();
+
+const ArticleController = require('../controllers/article.controller'); 
+const articleController = new ArticleController();
 
 articleRouter
     .route('')
