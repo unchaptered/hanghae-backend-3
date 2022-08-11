@@ -41,10 +41,5 @@
     "lint-staged": "^13.0.3",
     "nodemon": "^2.0.19",
     "prettier": "^2.7.1"
-  },
-  "lint-staged": {
-    "*.js": "eslint --cache --fix",
-    "*.{js,css,md}": "prettier --write",
-    "ignore": ["node_modules", "dist", "package-lock.json"]
   }
 }
