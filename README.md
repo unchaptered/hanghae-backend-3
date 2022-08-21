@@ -3,6 +3,10 @@
 > 본 저장소는 항해99 주특기 숙련주차에 진행된 팀 단위로 서버 개발에 제작되었습니다.<br>
 > [JeungHoSub/hanghae_node3week](https://github.com/JeungHoSub/hanghae_node3week)
 
+야호! 피드백으로 칭찬받았다!
+
+![image](https://user-images.githubusercontent.com/86306802/185808634-a8177af9-f556-479b-b928-8f59dde0bfa0.png)
+
 <hr>
 
 ### 소개글
